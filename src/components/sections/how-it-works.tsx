@@ -1,39 +1,51 @@
+"use client";
+
+import { Cpu, PenLine, MessageSquare } from "lucide-react";
+import ExpandableBentoGrid from "@/components/ui/expandable-bento-grid";
+
 const steps = [
   {
-    index: "01",
+    id: "idea",
     title: "Tell us the idea",
-    body: "Share what you want to build, who it is for, and the constraints that matter.",
+    subtitle: "Step 01",
+    description: "Share what you want to build.",
+    icon: <MessageSquare className="h-7 w-7" />,
+    content: (
+      <p>
+        Share what you want to build, who it is for, and the constraints that matter. Idea, budget,
+        and requirements are enough to start.
+      </p>
+    ),
   },
   {
-    index: "02",
+    id: "plan",
     title: "Plan and design",
-    body: "MicroCTRL maps the electronics, mechanics, and 3D design into a build you can review.",
+    subtitle: "Step 02",
+    description: "Electronics, mechanics, and 3D design.",
+    icon: <PenLine className="h-7 w-7" />,
+    content: (
+      <p>MicroCTRL maps the electronics, mechanics, and 3D design into a build you can review.</p>
+    ),
   },
   {
-    index: "03",
+    id: "prototype",
     title: "Prototype it",
-    body: "We fabricate, assemble, and test until the idea is a working prototype.",
+    subtitle: "Step 03",
+    description: "A working prototype.",
+    icon: <Cpu className="h-7 w-7" />,
+    content: <p>We fabricate, assemble, and test until the idea is a working prototype.</p>,
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="border-t border-[#29323A] bg-[#0B1117] px-5 py-20 sm:px-8">
-      <div className="mx-auto max-w-6xl">
-        <p className="font-mono text-xs tracking-[0.22em] text-[#3FA66B]">PROCESS</p>
-        <h2 className="mt-3 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-          How it works
-        </h2>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {steps.map((step) => (
-            <article key={step.index} className="border border-[#29323A] bg-[#121920] p-6">
-              <p className="font-mono text-sm text-[#3FA66B]">{step.index}</p>
-              <h3 className="mt-4 text-xl font-semibold text-white">{step.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-[#A7B0B8]">{step.body}</p>
-            </article>
-          ))}
-        </div>
+    <section id="how-it-works" className="border-t border-black/10 bg-white px-4 py-16 sm:px-8 sm:py-20">
+      <div className="mx-auto mb-10 max-w-2xl text-center">
+        <p className="font-mono text-xs tracking-[0.22em] text-black">PROCESS</p>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-black sm:text-5xl">How it works</h2>
+        <p className="mt-4 text-black">From the idea, through design, to a working prototype.</p>
       </div>
+      <ExpandableBentoGrid items={steps} />
     </section>
   );
 }

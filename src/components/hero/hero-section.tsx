@@ -1,8 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import ConstellationGrid from "@/components/ui/constellation-grid";
-import { EngineeringWorkbench } from "@/components/hero/engineering-workbench";
+import dynamic from "next/dynamic";
+import { AsciiGlitchRipple } from "@/components/ui/ascii-glitch-ripple";
+import { PerspectiveGrid } from "@/components/ui/perspective-grid";
+import { PixelatedImageTrail } from "@/components/ui/pixelated-image-trail";
+
+const LiquidMetalButton = dynamic(
+  () => import("@/components/ui/liquid-metal-button").then((mod) => mod.LiquidMetalButton),
+  { ssr: false },
+);
 
 const capabilities = [
   "ROBOTICS",
@@ -12,49 +18,59 @@ const capabilities = [
   "3D PRINTING",
 ];
 
+const trailImages = [
+  "/trail-images/image1.jpg",
+  "/trail-images/image2.jpg",
+  "/trail-images/image3.jpg",
+  "/trail-images/image4.jpg",
+  "/trail-images/image5.jpg",
+];
+
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 export function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-svh overflow-hidden bg-[#0B1117]">
-      <div className="pointer-events-none absolute inset-0 opacity-70">
-        <ConstellationGrid />
-      </div>
-      <div className="relative mx-auto grid min-h-svh max-w-7xl items-center gap-12 px-5 py-16 sm:px-8 lg:grid-cols-2 lg:gap-8 lg:px-10 lg:py-20">
-        <div className="max-w-xl">
-          <p className="font-mono text-xs tracking-[0.22em] text-[#A7B0B8]">
-            ENGINEERING <span className="text-[#3FA66B]">•</span> PROTOTYPING{" "}
-            <span className="text-[#3FA66B]">•</span> 3D DESIGN
+    <section id="hero" className="relative min-h-svh overflow-hidden bg-white">
+      <PerspectiveGrid className="absolute inset-0" gridSize={28} />
+      <PixelatedImageTrail images={trailImages} className="z-[1]" imageSize={140} />
+      <div className="pointer-events-none relative z-10 mx-auto flex min-h-svh max-w-6xl flex-col justify-center px-4 pb-16 pt-28 sm:px-8">
+        <div className="pointer-events-auto max-w-3xl">
+          <p className="font-mono text-[10px] tracking-[0.18em] text-black sm:text-xs sm:tracking-[0.22em]">
+            ENGINEERING • PROTOTYPING • 3D DESIGN
           </p>
-          <h1 className="mt-5 text-5xl font-semibold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Have an Idea?
-            <br />
-            Let’s Build It.
+          <h1 className="mt-5 text-[clamp(2.35rem,9vw,4.75rem)] font-semibold leading-[0.95] tracking-tight text-black">
+            <AsciiGlitchRipple className="block">Have an Idea?</AsciiGlitchRipple>
+            <AsciiGlitchRipple className="mt-2 block">Let’s Build It.</AsciiGlitchRipple>
           </h1>
-          <p className="mt-6 max-w-lg text-base leading-relaxed text-[#A7B0B8] sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-black sm:text-lg">
             From project ideas to working prototypes — tell us what you want to build, your
             budget, and your requirements. MicroCTRL helps you plan, design, prototype, and
             bring it to life.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button className="w-full sm:w-auto" onClick={() => scrollTo("project-form")}>
-              Start Your Project →
-            </Button>
-            <Button
-              variant="outline"
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+            <LiquidMetalButton
               className="w-full sm:w-auto"
+              metalConfig={{ colorBack: "#111111", colorTint: "#ffffff", speed: 0.35 }}
+              onClick={() => scrollTo("project-form")}
+            >
+              Start Your Project →
+            </LiquidMetalButton>
+            <LiquidMetalButton
+              className="w-full sm:w-auto"
+              metalConfig={{ colorBack: "#444444", colorTint: "#ffffff", speed: 0.3 }}
               onClick={() => scrollTo("how-it-works")}
             >
               How It Works
-            </Button>
+            </LiquidMetalButton>
           </div>
-          <p className="mt-8 font-mono text-[11px] tracking-[0.14em] text-[#A7B0B8] sm:text-xs">
-            {capabilities.join("  ·  ")}
-          </p>
+          <ul className="mt-8 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[10px] tracking-[0.14em] text-black sm:text-xs">
+            {capabilities.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </div>
-        <EngineeringWorkbench />
       </div>
     </section>
   );

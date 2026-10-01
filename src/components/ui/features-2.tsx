@@ -106,14 +106,14 @@ const rows = [
 
 export default function FeaturesBlock() {
   return (
-    <section className="bg-[#0B1117] px-6 py-20 text-white">
+    <section className="bg-white px-6 py-20 text-black">
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <Badge>Platform</Badge>
           <h2 className="mt-4 text-4xl font-semibold tracking-tight">
             Built for every part of your workflow
           </h2>
-          <p className="mt-4 text-[#A7B0B8]">
+          <p className="mt-4 text-black">
             Acme brings collaboration, analytics, and security into one cohesive
             platform, so nothing falls between the cracks.
           </p>
@@ -126,17 +126,17 @@ export default function FeaturesBlock() {
                 <div className="grid items-center gap-10 lg:grid-cols-2">
                   <div className={isEven ? "" : "lg:order-2"}>
                     <div className="flex items-center gap-3">
-                      <row.Icon className="text-[#3FA66B]" size={18} />
-                      <span className="text-xs uppercase tracking-[0.18em] text-[#3FA66B]">
+                      <row.Icon className="text-black" size={18} />
+                      <span className="text-xs uppercase tracking-[0.18em] text-black">
                         {row.eyebrow}
                       </span>
                     </div>
                     <h3 className="mt-4 text-3xl font-semibold">{row.title}</h3>
-                    <p className="mt-3 text-[#A7B0B8]">{row.body}</p>
+                    <p className="mt-3 text-black">{row.body}</p>
                     <ul className="mt-6 space-y-2">
                       {row.bullets.map((bullet) => (
                         <li key={bullet} className="flex items-start gap-2 text-sm">
-                          <Check className="mt-0.5 text-[#3FA66B]" size={16} />
+                          <Check className="mt-0.5 text-black" size={16} />
                           {bullet}
                         </li>
                       ))}
@@ -151,23 +151,23 @@ export default function FeaturesBlock() {
                         ))}
                       </div>
                       <div>
-                        <p className="text-lg font-semibold text-[#3FA66B]">{row.stat.value}</p>
-                        <p className="text-xs text-[#A7B0B8]">{row.stat.label}</p>
+                        <p className="text-lg font-semibold text-black">{row.stat.value}</p>
+                        <p className="text-xs text-black">{row.stat.label}</p>
                       </div>
                     </div>
                     <Button className="mt-6">{row.cta}</Button>
                   </div>
                   <div className={isEven ? "" : "lg:order-1"}>
-                    <div className="relative h-72 border border-[#29323A] bg-[#121920]">
+                    <div className="relative h-72 border border-black bg-white">
                       <Image
                         src={row.img}
                         alt={row.imgAlt}
                         fill
-                        className="object-cover"
+                        className="object-cover grayscale"
                         sizes="(min-width: 1024px) 50vw, 100vw"
                       />
                     </div>
-                    <p className="mt-3 text-xs uppercase tracking-[0.16em] text-[#A7B0B8]">
+                    <p className="mt-3 text-xs uppercase tracking-[0.16em] text-black">
                       {row.eyebrow} Preview
                     </p>
                   </div>

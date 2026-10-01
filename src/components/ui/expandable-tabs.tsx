@@ -47,7 +47,7 @@ const transition = { delay: 0.1, type: "spring" as const, bounce: 0, duration: 0
 export function ExpandableTabs({
   tabs,
   className,
-  activeColor = "text-[#3FA66B]",
+  activeColor = "text-white",
   onChange,
 }: ExpandableTabsProps) {
   const [selected, setSelected] = React.useState<number | null>(null);
@@ -67,13 +67,13 @@ export function ExpandableTabs({
     <div
       ref={outsideClickRef}
       className={cn(
-        "flex items-center gap-1 border border-[#29323A] bg-[#0B1117] p-1",
+        "flex items-center gap-1 border border-black bg-white p-1",
         className,
       )}
     >
       {tabs.map((tab, index) => {
         if (tab.type === "separator") {
-          return <div key={`sep-${index}`} className="mx-1 h-5 w-px bg-[#29323A]" />;
+          return <div key={`sep-${index}`} className="mx-1 h-5 w-px bg-black" />;
         }
         const Icon = tab.icon;
         return (
@@ -89,8 +89,8 @@ export function ExpandableTabs({
             className={cn(
               "relative flex items-center px-2 py-2 text-sm font-medium",
               selected === index
-                ? cn("bg-[#121920]", activeColor)
-                : "text-[#A7B0B8] hover:bg-[#121920] hover:text-white",
+                ? cn("bg-black", activeColor)
+                : "text-black hover:bg-black hover:text-white",
             )}
           >
             <Icon size={18} />

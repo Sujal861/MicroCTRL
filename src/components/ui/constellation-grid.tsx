@@ -118,7 +118,7 @@ export default function ConstellationGrid() {
       mouse.prevY = mouse.y;
       const speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
 
-      ctx.fillStyle = "#0B1117";
+      ctx.fillStyle = "#FFFFFF";
       ctx.fillRect(0, 0, width, height);
 
       const spring = reduced ? 0 : 14;
@@ -156,7 +156,7 @@ export default function ConstellationGrid() {
           if (distSq < maxSq) {
             const nDist = Math.sqrt(distSq);
             const alpha = (1 - nDist / maxDist) * 0.16;
-            ctx.strokeStyle = `rgba(167, 176, 184, ${alpha})`;
+            ctx.strokeStyle = `rgba(0, 0, 0, ${alpha})`;
             ctx.lineWidth = 0.6;
             ctx.beginPath();
             ctx.moveTo(n.x, n.y);
@@ -171,14 +171,14 @@ export default function ConstellationGrid() {
         const isNear = dist < mouse.radius;
         const alpha = isNear ? 0.9 : 0.28;
         ctx.fillStyle = isNear
-          ? `rgba(63, 166, 107, ${alpha})`
-          : `rgba(167, 176, 184, ${alpha})`;
+          ? `rgba(0, 0, 0, ${alpha})`
+          : `rgba(0, 0, 0, ${alpha * 0.7})`;
         ctx.beginPath();
         ctx.arc(n.x, n.y, isNear ? 2.2 : 1.15, 0, Math.PI * 2);
         ctx.fill();
         if (dist < 72) {
           ctx.font = "8px ui-monospace, SFMono-Regular, Consolas, monospace";
-          ctx.fillStyle = "rgba(63, 166, 107, 0.8)";
+          ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
           ctx.fillText(n.label, n.x + 8, n.y - 8);
         }
       }

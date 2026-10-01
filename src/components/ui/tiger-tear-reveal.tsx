@@ -363,7 +363,7 @@ function Half({
         <g transform={transform}>
           <path d={d(core)} fill="#ffffff" />
           {curls.map((c, i) =>
-            c ? <path key={i} d={c} fill={paper} stroke="#d5ddd8" strokeWidth="0.4" /> : null,
+            c ? <path key={i} d={c} fill={paper} stroke="#000000" strokeWidth="0.4" /> : null,
           )}
         </g>
       ) : null}
@@ -388,11 +388,11 @@ type FrameState = { p: number; look: Pt; blink: number; squint: number };
 export default function TigerTearReveal({
   word = "BUILD",
   tagline = "FROM IDEA TO HARDWARE",
-  ink = "#0B1117",
-  paper = "#E8F4ED",
-  taglineColor = "#267047",
-  eyeColor = "#c8892e",
-  furColor = "#c4893f",
+  ink = "#000000",
+  paper = "#FFFFFF",
+  taglineColor = "#000000",
+  eyeColor = "#f0a526",
+  furColor = "#d9832c",
   fontFamily = 'var(--font-geist-sans), Impact, "Arial Black", sans-serif',
   height = "100svh",
   scrollDistance = "160svh",
@@ -543,7 +543,7 @@ export default function TigerTearReveal({
     <div ref={rootRef} className={className} style={{ height: `calc(${height} + ${scrollDistance})` }}>
       <div
         ref={stageRef}
-        className="sticky top-0 overflow-hidden bg-[#0B1117]"
+        className="sticky top-0 overflow-hidden bg-white"
         style={{ height, cursor: s.pop > 0.9 ? "crosshair" : undefined }}
         onPointerMove={(e) => {
           pointer.current = { x: e.clientX, y: e.clientY };
@@ -603,7 +603,7 @@ export default function TigerTearReveal({
           </g>
         </svg>
         {hint && progress === undefined ? (
-          <p className="pointer-events-none absolute bottom-6 left-0 right-0 text-center font-mono text-[11px] uppercase tracking-[0.28em] text-[#267047]">
+          <p className="pointer-events-none absolute bottom-6 left-0 right-0 text-center font-mono text-[11px] uppercase tracking-[0.28em] text-black">
             scroll
           </p>
         ) : null}

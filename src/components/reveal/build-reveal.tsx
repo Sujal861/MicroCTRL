@@ -8,11 +8,11 @@ export function BuildReveal() {
       <TigerTearReveal
         word="BUILD"
         tagline="FROM IDEA TO HARDWARE"
-        ink="#0B1117"
-        paper="#E8F4ED"
-        taglineColor="#267047"
-        eyeColor="#c8892e"
-        furColor="#c4893f"
+        ink="#000000"
+        paper="#FFFFFF"
+        taglineColor="#000000"
+        eyeColor="#f0a526"
+        furColor="#d9832c"
         height="100svh"
         scrollDistance="160svh"
       />

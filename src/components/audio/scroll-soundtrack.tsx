@@ -69,9 +69,9 @@ export function ScrollSoundtrack() {
         aria-pressed={!muted}
         aria-label={muted ? "Unmute soundtrack" : "Mute soundtrack"}
         title="Soundtrack plays after the hero"
-        className="fixed bottom-5 right-5 z-40 flex h-11 w-11 items-center justify-center border border-[#29323A] bg-[#0B1117] text-[#A7B0B8] hover:border-[#3FA66B] hover:text-[#3FA66B]"
+        className="glass-chip fixed bottom-4 right-4 z-40 flex h-11 w-11 items-center justify-center text-black sm:bottom-5 sm:right-5"
       >
-        {muted ? <VolumeX size={18} /> : <Volume2 size={18} className="text-[#3FA66B]" />}
+        {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
       </button>
     </>
   );
