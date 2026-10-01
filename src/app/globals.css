@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0b1117;
+  --foreground: #ffffff;
+  --navy: #0b1117;
+  --signal: #3fa66b;
+  --signal-hover: #328957;
+  --signal-dark: #267047;
+  --signal-light: #e8f4ed;
+  --technical: #a7b0b8;
+  --border: #29323a;
+  --card: #121920;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-navy: var(--navy);
+  --color-signal: var(--signal);
+  --color-signal-hover: var(--signal-hover);
+  --color-signal-dark: var(--signal-dark);
+  --color-signal-light: var(--signal-light);
+  --color-technical: var(--technical);
+  --color-line: var(--border);
+  --color-card: var(--card);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+}
+
+@keyframes bench-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes measure-dash {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+.bench-drift {
+  animation: bench-drift 8s ease-in-out infinite;
+}
+
+.measure-dash {
+  stroke-dasharray: 4 6;
+  animation: measure-dash 12s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bench-drift,
+  .measure-dash {
+    animation: none;
+  }
+}
