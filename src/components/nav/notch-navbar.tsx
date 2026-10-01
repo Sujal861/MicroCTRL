@@ -43,7 +43,7 @@ export function NotchNavbar({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className={cn("fixed inset-x-0 top-0 z-50 flex items-start", className)}>
+    <header className={cn("fixed inset-x-0 top-0 z-50 flex items-start text-white", className)}>
       <div className="glass-bar relative z-20 h-10 min-w-0 flex-1">
         <svg className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
           <line x1="0" y1="39.5" x2="100%" y2="39.5" stroke="currentColor" strokeOpacity={0.2} strokeWidth={0.5} />
