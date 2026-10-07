@@ -3,6 +3,7 @@ import { NotchNavbar } from "@/components/nav/notch-navbar";
 import { HeroSection } from "@/components/hero/hero-section";
 import { BuildReveal } from "@/components/reveal/build-reveal";
 import { HowItWorks } from "@/components/sections/how-it-works";
+import { ProjectsSection } from "@/components/sections/projects-section";
 import { MeetTheTeam } from "@/components/sections/meet-the-team";
 import { ProjectForm } from "@/components/sections/project-form";
 
@@ -13,6 +14,7 @@ export default function Home() {
       <HeroSection />
       <BuildReveal />
       <HowItWorks />
+      <ProjectsSection />
       <MeetTheTeam />
       <ProjectForm />
       <ScrollSoundtrack />
