@@ -14,6 +14,7 @@ const contacts = [
   { label: "Email", value: INBOX, href: `mailto:${INBOX}` },
   { label: "Phone", value: "8951386816", href: "tel:+918951386816" },
   { label: "Telegram", value: "Message MicroCTRL", href: "https://t.me/+afflTTJYeBtlOWJl" },
+  { label: "LinkedIn", value: "MicroCTRL", href: "https://www.linkedin.com/company/microctrl/home/?viewAsMember=true" },
 ];
 
 const fieldClass =

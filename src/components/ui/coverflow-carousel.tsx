@@ -36,6 +36,8 @@ export interface CoverflowCarouselProps {
   showCaption?: boolean;
   showPagination?: boolean;
   showNavigation?: boolean;
+  /** Fires when a slide is tapped without dragging (or Enter is pressed). */
+  onSlideClick?: (index: number) => void;
   /** Names the carousel for assistive tech. */
   label?: string;
   className?: string;
@@ -55,6 +57,7 @@ export function CoverflowCarousel({
   showCaption = false,
   showPagination = false,
   showNavigation = false,
+  onSlideClick,
   label = "Cover carousel",
   className,
   cardClassName,
@@ -76,6 +79,8 @@ export function CoverflowCarousel({
     pos: number;
     v: number;
     t: number;
+    /** Farthest the pointer strayed from the press — taps stay under 6px. */
+    moved: number;
   } | null>(null);
 
   const [selected, setSelected] = React.useState(0);
@@ -176,7 +181,12 @@ export function CoverflowCarousel({
       cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
     }
-    event.currentTarget.setPointerCapture(event.pointerId);
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    } catch {
+      // Synthetic or already-released pointers can't be captured — the drag
+      // still tracks while the pointer stays over the frame.
+    }
     targetRef.current = posRef.current;
     dragRef.current = {
       id: event.pointerId,
@@ -184,6 +194,7 @@ export function CoverflowCarousel({
       pos: posRef.current,
       v: 0,
       t: performance.now(),
+      moved: 0,
     };
   };
 
@@ -200,6 +211,7 @@ export function CoverflowCarousel({
     // Cards per second, for the throw.
     drag.v = ((posRef.current - previous) / Math.max(now - drag.t, 1)) * 1000;
     drag.t = now;
+    drag.moved = Math.max(drag.moved, Math.abs(event.clientX - drag.x));
 
     const index = indexAt(posRef.current);
     if (index !== selected) setSelected(index);
@@ -213,6 +225,18 @@ export function CoverflowCarousel({
     // Let a flick carry, but never more than two cards.
     const carried = Math.max(-2, Math.min(2, drag.v * 0.18));
     settle(clamp(Math.round(posRef.current + carried)));
+
+    // A press that never travelled is a tap, not a drag. Report the slide
+    // actually under the pointer — hit-testing ignores the pointer capture
+    // that the drag setup installed on the frame.
+    if (event.type === "pointerup" && drag.moved < 6 && onSlideClick) {
+      const hit = document.elementFromPoint(event.clientX, event.clientY);
+      const attr = hit
+        ?.closest("[data-slide-index]")
+        ?.getAttribute("data-slide-index") ?? null;
+      const index = attr === null ? Number.NaN : Number(attr);
+      if (Number.isInteger(index)) onSlideClick(index);
+    }
   };
 
   // Card width drives pitch, depth and perspective, so it is the only thing
@@ -266,6 +290,9 @@ export function CoverflowCarousel({
             } else if (event.key === "ArrowRight") {
               event.preventDefault();
               nudge(1);
+            } else if (event.key === "Enter" && onSlideClick) {
+              event.preventDefault();
+              onSlideClick(indexAt(posRef.current));
             }
           }}
           // Vertical padding keeps the drop shadows clear of the overflow clip.
@@ -292,8 +319,10 @@ export function CoverflowCarousel({
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`${index + 1} of ${count}`}
+                data-slide-index={index}
                 className={cn(
                   "absolute left-1/2 top-0 aspect-square overflow-hidden rounded-2xl bg-muted shadow-xl will-change-transform",
+                  onSlideClick && "cursor-pointer",
                   cardClassName,
                 )}
                 style={{ width: "var(--cf-card)" }}

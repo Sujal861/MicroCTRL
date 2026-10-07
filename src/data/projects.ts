@@ -277,16 +277,6 @@ export const projects: Project[] = [
     status: "Real-time full-stack",
   },
   {
-    id: "microctrl",
-    name: "MicroCTRL",
-    category: "web",
-    description:
-      "The MicroCTRL studio site — scroll-driven landing experience with a pinned tear-reveal, shader motion, and an emailed project-brief flow.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    areas: ["Frontend", "Motion Design", "Product Engineering"],
-    status: "Deployed",
-  },
-  {
     id: "kodbank",
     name: "KodBank",
     category: "web",
