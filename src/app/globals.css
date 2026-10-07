@@ -1,8 +1,12 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
   --background: #ffffff;
   --foreground: #000000;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --ring: #000000;
   --navy: #ffffff;
   --signal: #000000;
   --signal-hover: #000000;
@@ -16,6 +20,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-ring: var(--ring);
   --color-navy: var(--navy);
   --color-signal: var(--signal);
   --color-signal-hover: var(--signal-hover);

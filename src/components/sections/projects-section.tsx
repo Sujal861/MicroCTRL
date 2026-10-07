@@ -5,6 +5,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
+  CoverflowCarousel,
+  type CoverflowSlide,
+} from "@/components/ui/coverflow-carousel";
+import {
   categories,
   projects,
   type Category,
@@ -21,6 +25,72 @@ const filters = [
 ];
 
 const strongDisciplines: CategoryId[] = ["robotics", "hardware"];
+
+/**
+ * Stock cover images (Unsplash) for the coverflow showcase — one distinct
+ * photo per project so no image repeats inside a category. All URLs were
+ * verified to return 200. Swap any id to re-skin a card.
+ */
+const COVER_POOLS: Record<CategoryId, string[]> = {
+  robotics: [
+    "1485827404703-89b55fcc595e",
+    "1535378917042-10a22c95931a",
+    "1473968512647-3e447244af8f",
+    "1561144257-e32e8efc6c4f",
+    "1531746790731-6c087fecd65a",
+    "1589254065878-42c9da997008",
+    "1546776310-eef45dd6d63c",
+  ],
+  hardware: [
+    "1518770660439-4636190af475",
+    "1553406830-ef2513450d76",
+    "1581092160562-40aa08e78837",
+    "1581092918056-0c4c3acd3789",
+  ],
+  ai: [
+    "1620712943543-bcc4688e7485",
+    "1677442136019-21780ecad995",
+    "1555949963-aa79dcee981c",
+    "1526374965328-7f61d4dc18c5",
+    "1597733336794-12d05021d510",
+    "1655720828018-edd2daec9349",
+  ],
+  web: [
+    "1461749280684-dccba630e2f6",
+    "1498050108023-c5249f4df085",
+    "1487058792275-0ad4aaf24ca7",
+    "1517694712202-14dd9538aa97",
+    "1531297484001-80022131f5a1",
+    "1499951360447-b19be8fe80f5",
+    "1460925895917-afdab827c52f",
+  ],
+  cyber: ["1550751827-4bd374c3f58b", "1563013544-824ae1b704d3"],
+  mechanical: ["1613040809024-b4ef7ba99bc3", "1567789884554-0b844b597180"],
+};
+
+const coverSrc = (id: string) =>
+  `https://images.unsplash.com/photo-${id}?w=640&h=640&fit=crop&q=70&auto=format`;
+
+/** Coverflow slides for the currently visible projects, with real captions. */
+function buildSlides(items: Project[]): CoverflowSlide[] {
+  const cursor: Partial<Record<CategoryId, number>> = {};
+  return items.map((project) => {
+    const category = categories.find((c) => c.id === project.category)!;
+    const pool = COVER_POOLS[project.category];
+    const index = cursor[project.category] ?? 0;
+    cursor[project.category] = index + 1;
+    return {
+      src: coverSrc(pool[index % pool.length]),
+      alt: `${project.name} — ${category.title}`,
+      title: project.name,
+      subtitle: category.title,
+      meta: [
+        { label: "Status", value: project.status },
+        { label: "Stack", value: project.tech.slice(0, 2).join(" + ") },
+      ],
+    };
+  });
+}
 
 /**
  * Auto-drifts a horizontal scroller left/right, ping-ponging at the edges.
@@ -319,6 +389,9 @@ export function ProjectsSection() {
   const visibleCategories =
     active === "all" ? categories : categories.filter((c) => c.id === active);
 
+  const visibleProjects =
+    active === "all" ? projects : projects.filter((p) => p.category === active);
+
   const countFor = (id: string) =>
     id === "all" ? projects.length : projects.filter((p) => p.category === id).length;
 
@@ -337,7 +410,7 @@ export function ProjectsSection() {
             Projects, by discipline.
           </h2>
           <p className="mt-4 text-black/70">
-            Six disciplines of work — rows glide on their own; hover to pause,
+            Six disciplines of work — spin the coverflow, filter by discipline,
             then click any project to see what was built.
           </p>
         </div>
@@ -398,6 +471,17 @@ export function ProjectsSection() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.32, ease: EASE }}
           >
+            {/* Coverflow showcase — remounts per filter so it starts centred */}
+            <div className="mt-10">
+              <CoverflowCarousel
+                slides={buildSlides(visibleProjects)}
+                showCaption
+                showPagination
+                showNavigation
+                label="Project coverflow"
+              />
+            </div>
+
             {visibleCategories.map((category) => (
               <CategoryBlock
                 key={category.id}
